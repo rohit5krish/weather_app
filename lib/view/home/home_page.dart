@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/home/widgets/bottom_forecast.dart';
+import 'package:weather_app/view/home/widgets/wind_humidity.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -67,55 +69,7 @@ class HomePage extends StatelessWidget {
                     //   height: 30,
                     // ),
                     sbHeight20,
-                    Container(
-                      // width: screenSize.width * 0.8,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: blackClr26,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Icon(
-                                Icons.air,
-                                color: whiteColor,
-                                size: 28,
-                              ),
-                              sbHeight10,
-                              Text(
-                                '7Km/h',
-                                style: whiteTxt14,
-                              ),
-                              Text(
-                                'Wind',
-                                style: whiteTxt14,
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Icon(
-                                Icons.water_drop_outlined,
-                                color: whiteColor,
-                                size: 28,
-                              ),
-                              sbHeight10,
-                              Text(
-                                '36%',
-                                style: whiteTxt14,
-                              ),
-                              Text(
-                                'Humidity',
-                                style: whiteTxt14,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    WindAndHumidityContainer(),
                     sbHeight20,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,36 +82,7 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     sbHeight20,
-                    Container(
-                      height: 120,
-                      child: Expanded(
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: blackClr26),
-                                  child: Column(
-                                    children: [
-                                      Text('15:00', style: whiteTxt14),
-                                      Image.network(
-                                          'http://openweathermap.org/img/wn/10d@2x.png',
-                                          height: 60,
-                                          width: 60),
-                                      Text('26°C', style: whiteTxt14)
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                    )
+                    BottomForecastScroll()
                   ],
                 ),
               )
