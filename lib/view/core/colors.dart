@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Colors
 const blackColor = Colors.black;
+const blackClr26 = Colors.black26;
 const whiteColor = Colors.white;
 const whiteClr30 = Colors.white30;
 
