@@ -48,14 +48,14 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      width: screenSize.width * 0.7,
-                      height: screenSize.height * 0.3,
+                      width: screenSize.width * 0.6,
+                      height: screenSize.height * 0.25,
                       child: Image.asset('assets/thunder_rain.png'),
                     ),
                     sbHeight10,
                     Text(
                       '26°C',
-                      style: cyanTxt100,
+                      style: cyanTxt60,
                     ),
                     Text(
                       'Cloudy',
