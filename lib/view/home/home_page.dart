@@ -34,9 +34,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-              onPressed: () {
-                ApiService().getWeather();
-              },
+              onPressed: () {},
               icon: Icon(
                 Icons.add,
                 color: whiteColor,
@@ -54,84 +52,93 @@ class HomePage extends StatelessWidget {
           }),
           centerTitle: true,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Center(
-                child: Obx(() {
-                  if (weatherCtrl.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (weatherCtrl.isError.value) {
-                    return Text('');
-                  }
-                  final weatherDetail = weatherCtrl.weatherData.value.list![0];
-                  final String climateDescription =
-                      weatherDetail.weather![0].description.toString();
-                  final String climate =
-                      weatherDetail.weather![0].main.toString();
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: screenSize.width * 0.65,
-                        height: screenSize.height * 0.25,
-                        child: Image.asset((climateDescription ==
-                                'moderate rain')
-                            ? 'assets/thunder_rain.png'
-                            : (climate == 'Clear' || climate == 'Clouds')
-                                ? 'assets/clouds.png'
-                                : (climateDescription == 'light rain')
-                                    ? 'assets/cloud_rain.png'
-                                    : (climateDescription == 'overcast clouds')
-                                        ? 'assets/thunder_rain.png'
-                                        : (climate == 'Rain')
-                                            ? 'assets/thunder_rain.png'
-                                            : (climate == 'Thunder')
-                                                ? 'assets/sun_thunder.png'
-                                                : 'assets/cloud_sun.png'),
-                      ),
-                      sbHeight10,
+        body: RefreshIndicator(
+          onRefresh: () {
+            return WeatherController().getWeatherData();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: ListView(
+              children: [
+                Center(
+                  child: Obx(() {
+                    if (weatherCtrl.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (weatherCtrl.isError.value) {
+                      return Text('');
+                    }
+                    final weatherDetail =
+                        weatherCtrl.weatherData.value.list![0];
+                    final String climateDescription =
+                        weatherDetail.weather![0].description.toString();
+                    final String climate =
+                        weatherDetail.weather![0].main.toString();
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: screenSize.width * 0.65,
+                          height: screenSize.height * 0.25,
+                          child: Image.asset(
+                              (climateDescription == 'moderate rain')
+                                  ? 'assets/thunder_rain.png'
+                                  : (climate == 'Clear' || climate == 'Clouds')
+                                      ? 'assets/clouds.png'
+                                      : (climateDescription == 'light rain')
+                                          ? 'assets/cloud_rain.png'
+                                          : (climateDescription ==
+                                                  'overcast clouds')
+                                              ? 'assets/thunder_rain.png'
+                                              : (climate == 'Rain')
+                                                  ? 'assets/thunder_rain.png'
+                                                  : (climate == 'Thunder')
+                                                      ? 'assets/sun_thunder.png'
+                                                      : 'assets/cloud_sun.png'),
+                        ),
+                        sbHeight10,
 
-                      Text(
-                        '${weatherDetail.main!.temp!.floor()}°C',
-                        style: cyanTxt60,
-                      ),
-                      Text(
-                        climate,
-                        style: whiteTxt22,
-                      ),
-                      // Divider(
-                      //   indent: 40,
-                      //   endIndent: 40,
-                      //   color: whiteClr30,
-                      //   thickness: 0.5,
-                      //   height: 30,
-                      // ),
-                      sbHeight20,
-                      WindAndHumidityContainer(
-                        humidity: weatherDetail.main!.humidity.toString(),
-                        windSpeed: weatherDetail.wind!.speed.toString(),
-                      ),
-                      sbHeight20,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Today', style: whiteTxt18),
-                          Text(
-                            '7-Day Forecasts',
-                            style: whiteTxt14,
-                          )
-                        ],
-                      ),
-                      sbHeight20,
-                      BottomForecastScroll()
-                    ],
-                  );
-                }),
-              )
-            ],
+                        Text(
+                          '${weatherDetail.main!.temp!.floor()}°C',
+                          style: cyanTxt60,
+                        ),
+                        Text(
+                          climate,
+                          style: whiteTxt22,
+                        ),
+                        // Divider(
+                        //   indent: 40,
+                        //   endIndent: 40,
+                        //   color: whiteClr30,
+                        //   thickness: 0.5,
+                        //   height: 30,
+                        // ),
+                        sbHeight20,
+                        WindAndHumidityContainer(
+                          humidity: weatherDetail.main!.humidity.toString(),
+                          windSpeed: weatherDetail.wind!.speed.toString(),
+                        ),
+                        sbHeight20,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Today', style: whiteTxt18),
+                            Text(
+                              '7-Day Forecasts',
+                              style: whiteTxt14,
+                            )
+                          ],
+                        ),
+                        sbHeight20,
+                        BottomForecastScroll(
+                          forecastList: weatherCtrl.weatherData.value.list!,
+                        )
+                      ],
+                    );
+                  }),
+                )
+              ],
+            ),
           ),
         ),
       ),

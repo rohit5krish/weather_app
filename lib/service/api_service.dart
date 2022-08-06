@@ -10,7 +10,6 @@ class ApiService {
       final Response response = await Dio().get(ApiEndpoints.weatherUrl);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.data);
         final result = WeatherModel.fromJson(response.data);
         return Right(result);
       } else {

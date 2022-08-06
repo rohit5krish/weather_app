@@ -15,7 +15,7 @@ class WeatherController extends GetxController {
     super.onInit();
   }
 
-  void getWeatherData() async {
+  Future<void> getWeatherData() async {
     isLoading(true);
     isError(false);
 
