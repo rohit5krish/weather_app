@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/view/core/colors.dart';
 
 class WindAndHumidityContainer extends StatelessWidget {
+  final String windSpeed;
+  final String humidity;
+
   const WindAndHumidityContainer({
     Key? key,
+    required this.windSpeed,
+    required this.humidity,
   }) : super(key: key);
 
   @override
@@ -27,7 +32,7 @@ class WindAndHumidityContainer extends StatelessWidget {
               ),
               sbHeight10,
               Text(
-                '7Km/h',
+                '$windSpeed m/s',
                 style: whiteTxt14,
               ),
               Text(
@@ -45,7 +50,7 @@ class WindAndHumidityContainer extends StatelessWidget {
               ),
               sbHeight10,
               Text(
-                '36%',
+                '$humidity%',
                 style: whiteTxt14,
               ),
               Text(
