@@ -60,10 +60,24 @@ class HomePage extends StatelessWidget {
                   Icons.add,
                   color: whiteColor,
                 )),
-            title: Text(
-              weatherCtrl.weatherData.value.city!.name.toString(),
-              style: whiteTxt18,
-            ),
+            title: (weatherCtrl.isLoading.value)
+                ? Shimmer.fromColors(
+                    highlightColor: greyClr100!,
+                    baseColor: greyClr300!,
+                    child: Container(
+                      width: 60,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: blueColor,
+                          borderRadius: BorderRadius.circular(5)),
+                    ),
+                  )
+                : (weatherCtrl.isError.value)
+                    ? Text('')
+                    : Text(
+                        weatherCtrl.weatherData.value.city!.name.toString(),
+                        style: whiteTxt18,
+                      ),
             centerTitle: true,
           ),
           body: RefreshIndicator(
