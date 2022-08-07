@@ -40,6 +40,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   json_serializable: ^6.2.0
   json_annotation: ^4.5.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

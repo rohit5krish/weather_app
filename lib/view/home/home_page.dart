@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/service/api_service.dart';
 import 'package:weather_app/view/core/colors.dart';
 import 'package:weather_app/view/home/widgets/bottom_forecast.dart';
+import 'package:weather_app/view/home/widgets/loading_widget.dart';
 import 'package:weather_app/view/home/widgets/wind_humidity.dart';
 
 class HomePage extends StatelessWidget {
@@ -41,7 +40,16 @@ class HomePage extends StatelessWidget {
               )),
           title: Obx(() {
             if (weatherCtrl.isLoading.value) {
-              return Center(child: CircularProgressIndicator());
+              return Shimmer.fromColors(
+                highlightColor: greyClr100!,
+                baseColor: greyClr300!,
+                child: Container(
+                  width: 60,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      color: blueColor, borderRadius: BorderRadius.circular(5)),
+                ),
+              );
             } else if (weatherCtrl.isError.value) {
               return Text('');
             }
@@ -63,7 +71,7 @@ class HomePage extends StatelessWidget {
                 Center(
                   child: Obx(() {
                     if (weatherCtrl.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
+                      return LoadingEffect();
                     } else if (weatherCtrl.isError.value) {
                       return Text('');
                     }
@@ -113,12 +121,12 @@ class HomePage extends StatelessWidget {
                         //   thickness: 0.5,
                         //   height: 30,
                         // ),
-                        sbHeight20,
+                        sbHeight30,
                         WindAndHumidityContainer(
                           humidity: weatherDetail.main!.humidity.toString(),
                           windSpeed: weatherDetail.wind!.speed.toString(),
                         ),
-                        sbHeight20,
+                        sbHeight30,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

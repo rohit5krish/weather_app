@@ -389,6 +389,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -501,3 +508,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.16.2 <3.0.0"
+  flutter: ">=1.9.1"
