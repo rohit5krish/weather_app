@@ -4,8 +4,10 @@ import 'package:shimmer/shimmer.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/view/core/colors.dart';
 import 'package:weather_app/view/home/widgets/bottom_forecast.dart';
+import 'package:weather_app/view/home/widgets/home_top_illustration.dart';
 import 'package:weather_app/view/home/widgets/loading_widget.dart';
 import 'package:weather_app/view/home/widgets/wind_humidity.dart';
+import 'package:weather_app/view/search/search.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class HomePage extends StatelessWidget {
             color: blackColor,
             image: !weatherCtrl.isLoading.value
                 ? DecorationImage(
-                    opacity: 0.7,
+                    opacity: 0.8,
                     image: AssetImage((weatherTime <= 13)
                         ? 'assets/cloudsMorning.jpg'
                         : (weatherTime < 18)
@@ -54,12 +56,6 @@ class HomePage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            leading: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.add,
-                  color: whiteColor,
-                )),
             title: (weatherCtrl.isLoading.value)
                 ? Shimmer.fromColors(
                     highlightColor: greyClr100!,
@@ -76,13 +72,25 @@ class HomePage extends StatelessWidget {
                     ? Text('')
                     : Text(
                         weatherCtrl.weatherData.value.city!.name.toString(),
-                        style: whiteTxt18,
+                        style: whiteTxt22,
                       ),
             centerTitle: true,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.to(SearchPage());
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    color: whiteColor,
+                    size: 30,
+                  )),
+              sbWidth10,
+            ],
           ),
           body: RefreshIndicator(
             onRefresh: () {
-              return WeatherController().getWeatherData();
+              return weatherCtrl.getWeatherData();
             },
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -105,30 +113,11 @@ class HomePage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      width: screenSize.width * 0.65,
-                                      height: screenSize.height * 0.25,
-                                      child: Image.asset((climateDescription ==
-                                              'moderate rain')
-                                          ? 'assets/thunder_rain.png'
-                                          : (climate == 'Clear' ||
-                                                  climate == 'Clouds')
-                                              ? 'assets/clouds.png'
-                                              : (climateDescription ==
-                                                      'light rain')
-                                                  ? 'assets/cloud_rain.png'
-                                                  : (climateDescription ==
-                                                          'overcast clouds')
-                                                      ? 'assets/thunder_rain.png'
-                                                      : (climate == 'Rain')
-                                                          ? 'assets/thunder_rain.png'
-                                                          : (climate ==
-                                                                  'Thunder')
-                                                              ? 'assets/sun_thunder.png'
-                                                              : 'assets/cloud_sun.png'),
-                                    ),
+                                    HomeTopIllustration(
+                                        screenSize: screenSize,
+                                        climateDescription: climateDescription,
+                                        climate: climate),
                                     sbHeight10,
-
                                     Text(
                                       '${weatherDetail.main!.temp!.floor()}°C',
                                       style: cyanTxt60,
@@ -137,13 +126,6 @@ class HomePage extends StatelessWidget {
                                       climate,
                                       style: whiteTxt22,
                                     ),
-                                    // Divider(
-                                    //   indent: 40,
-                                    //   endIndent: 40,
-                                    //   color: whiteClr30,
-                                    //   thickness: 0.5,
-                                    //   height: 30,
-                                    // ),
                                     sbHeight30,
                                     WindAndHumidityContainer(
                                       humidity: weatherDetail.main!.humidity

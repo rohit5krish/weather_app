@@ -22,7 +22,6 @@ class BottomForecastScroll extends StatelessWidget {
         count < 10) {
       count++;
     }
-    print(count);
 
     return Container(
       height: 120,
