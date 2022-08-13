@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/view/core/colors.dart';
 import 'package:weather_app/view/home/home_page.dart';
@@ -49,7 +50,8 @@ class SearchPage extends StatelessWidget {
                 child: TextFormField(
                   controller: _searchCtrl,
                   onFieldSubmitted: (value) async {
-                    await weatherCtrl.getWeatherData(savedPlace: value);
+                    await weatherCtrl.getWeatherData(
+                        savedPlace: _searchCtrl.text.trim());
                   },
                   style: whiteTxt14,
                   decoration: InputDecoration(
@@ -65,50 +67,50 @@ class SearchPage extends StatelessWidget {
                 ),
               ),
               sbHeight30,
-              Obx(() {
-                return (weatherCtrl.isLoading.value)
-                    ? SearchLoadingEffect()
-                    : (weatherCtrl.isError.value)
-                        ? Text(
-                            'Unable to find Place.',
-                            style: whiteTxt20,
-                          )
-                        : (_searchCtrl.text.isEmpty)
-                            ? SearchSuggestions()
-                            : (weatherCtrl.weatherData.value.city != null)
-                                ? InkWell(
-                                    onTap: () async {
-                                      Get.offAll(HomePage(
-                                        place: _searchCtrl.text.trim(),
-                                      ));
-                                    },
-                                    child: Container(
-                                      width: screenSize.width * 9,
-                                      height: 80,
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          color: whiteClr24,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            weatherCtrl
-                                                .weatherData.value.city!.name!,
-                                            style: whiteTxt22,
-                                          ),
-                                          Text(
-                                            'Country : ${weatherCtrl.weatherData.value.city!.country!}',
-                                            style: white38Txt14,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : Text('');
-              }),
+              GetBuilder<WeatherController>(
+                  init: WeatherController(),
+                  builder: (controller) {
+                    if (controller.isLoading) {
+                      return SearchLoadingEffect();
+                    } else if (controller.isError) {
+                      return Text('Unable to find Place.', style: whiteTxt20);
+                    } else if (_searchCtrl.text.isEmpty) {
+                      return SearchSuggestions();
+                    } else if (controller.weatherData.city != null) {
+                      return InkWell(
+                        // highlightColor: Colors.transparent,
+                        splashFactory: NoSplash.splashFactory,
+                        onTap: () async {
+                          await controller.getWeatherData(
+                              savedPlace: _searchCtrl.text.trim());
+                          await Get.offAll(() => HomePage());
+                        },
+                        child: Container(
+                          width: screenSize.width * 9,
+                          height: 80,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: whiteClr24,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                controller.weatherData.city!.name!,
+                                style: whiteTxt22,
+                              ),
+                              Text(
+                                'Country : ${controller.weatherData.city!.country!}',
+                                style: white38Txt14,
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Text('');
+                    }
+                  }),
             ],
           ),
         )),

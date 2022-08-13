@@ -6,9 +6,9 @@ import 'package:weather_app/model/weather_model/weather_model.dart';
 import 'package:weather_app/service/api_service.dart';
 
 class WeatherController extends GetxController {
-  var isLoading = false.obs;
-  var isError = false.obs;
-  var weatherData = WeatherModel().obs;
+  var isLoading = false;
+  var isError = false;
+  var weatherData = WeatherModel();
 
   // @override
   // void onInit() {
@@ -18,8 +18,8 @@ class WeatherController extends GetxController {
 
   Future<void> getWeatherData(
       {Position? userLocation, String? savedPlace}) async {
-    isLoading(true);
-    isError(false);
+    isLoading=true;
+    isError=false;
     var weatherResult;
     if (userLocation != null) {
       weatherResult = await ApiService().getWeather(usrLocation: userLocation);
@@ -27,12 +27,13 @@ class WeatherController extends GetxController {
       weatherResult = await ApiService().getWeather(place: savedPlace);
     }
     weatherResult.fold((failure) {
-      isLoading(false);
-      isError(true);
+      isLoading=false;
+      isError=true;
     }, (success) {
-      isLoading(false);
-      isError(false);
-      weatherData(success);
+      isLoading=false;
+      isError=false;
+      weatherData=success;
     });
+    update();
   }
 }

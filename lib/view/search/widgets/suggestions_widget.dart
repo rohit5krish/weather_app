@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
@@ -8,7 +9,7 @@ import 'package:weather_app/view/home/home_page.dart';
 class SearchSuggestions extends StatelessWidget {
   SearchSuggestions({Key? key}) : super(key: key);
 
-  final LocationController _locCtrl = Get.put(LocationController());
+  final LocationController _locControl = Get.put(LocationController());
   final WeatherController weatherCtrl = Get.put(WeatherController());
 
   @override
@@ -17,37 +18,45 @@ class SearchSuggestions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         InkWell(
+          highlightColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
           onTap: () async {
-            await _locCtrl.getLocationData();
+            Position position = await _locControl.getLocationData();
+            await weatherCtrl.getWeatherData(userLocation: position);
+            await Get.offAll(() => HomePage());
           },
-          child: Obx(() {
-            return Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: whiteClr24, borderRadius: BorderRadius.circular(20)),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.place,
-                    color: whiteColor,
-                    size: 20,
+          child: GetBuilder<LocationController>(
+              init: LocationController(),
+              builder: (_locCtrl) {
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: whiteClr24,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.place,
+                        color: whiteColor,
+                        size: 20,
+                      ),
+                      _locCtrl.isLocationLoading
+                          ? CircularProgressIndicator()
+                          : Text(
+                              'My Location',
+                              style: whiteTxt14,
+                            )
+                    ],
                   ),
-                  _locCtrl.isLocationLoading.value
-                      ? CircularProgressIndicator()
-                      : Text(
-                          'My Location',
-                          style: whiteTxt14,
-                        )
-                ],
-              ),
-            );
-          }),
+                );
+              }),
         ),
         InkWell(
+          highlightColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
           onTap: () async {
-            Get.offAll(HomePage(
-              place: 'palakkad',
-            ));
+            await weatherCtrl.getWeatherData(savedPlace: 'kochi');
+            await Get.offAll(HomePage());
           },
           child: Container(
             padding: EdgeInsets.all(10),
@@ -61,7 +70,7 @@ class SearchSuggestions extends StatelessWidget {
                   size: 20,
                 ),
                 Text(
-                  'Palakkad',
+                  'Kochi',
                   style: whiteTxt14,
                 )
               ],

@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import 'package:weather_app/view/home/home_page.dart';
 
 class LocationController extends GetxController {
-  var isLocationLoading = false.obs;
+  var isLocationLoading = false;
 
-  Future<void> getLocationData() async {
-    isLocationLoading(true);
+  getLocationData() async {
+    isLocationLoading = true;
+    update();
     LocationPermission permissionCheck = await Geolocator.checkPermission();
 
     if (permissionCheck == LocationPermission.denied) {
@@ -19,9 +20,11 @@ class LocationController extends GetxController {
       }
     }
     Position position = await Geolocator.getCurrentPosition();
-    isLocationLoading(false);
-    Get.offAll(HomePage(
-      usrLocation: position,
-    ));
+    isLocationLoading = false;
+    // Get.offAll(() => HomePage(
+    //       usrLocation: position,
+    //     ));
+    update();
+    return position;
   }
 }

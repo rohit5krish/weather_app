@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/controller/location_controller.dart';
+import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/view/core/colors.dart';
 import 'package:weather_app/view/home/home_page.dart';
 import 'package:weather_app/view/search/search.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
-  final LocationController _locCtrl = Get.put(LocationController());
+
+  final LocationController _locControl = Get.put(LocationController());
+  final WeatherController weatherControl = Get.put(WeatherController());
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,21 +36,27 @@ class SplashScreen extends StatelessWidget {
             children: [
               Text('Weather App', style: splashTxtStyle),
               sbHeight20,
-              Obx(() {
-                return ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: whiteColor),
-                    onPressed: () async {
-                      await _locCtrl.getLocationData();
-                    },
-                    child: _locCtrl.isLocationLoading.value
-                        ? CircularProgressIndicator(
-                            strokeWidth: 2,
-                          )
-                        : Text('Detect Location'));
-              }),
+              GetBuilder<LocationController>(
+                  init: LocationController(),
+                  builder: (_locCtrl) {
+                    return ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: whiteColor),
+                        onPressed: () async {
+                          Position usrLocation =
+                              await _locCtrl.getLocationData();
+                          await weatherControl.getWeatherData(
+                              userLocation: usrLocation);
+                          await Get.offAll(() => HomePage());
+                        },
+                        child: _locCtrl.isLocationLoading
+                            ? CircularProgressIndicator(
+                                strokeWidth: 2,
+                              )
+                            : Text('Detect Location'));
+                  }),
               ElevatedButton(
                   onPressed: () {
-                    Get.to(SearchPage());
+                    Get.to(() => SearchPage());
                   },
                   child: Text('Select Manually'))
             ],
