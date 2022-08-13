@@ -17,7 +17,7 @@ class WindAndHumidityContainer extends StatelessWidget {
       // width: screenSize.width * 0.8,
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: blackClr26,
+        color: blackClr45,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(

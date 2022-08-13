@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Colors
 const blackColor = Colors.black;
-const blackClr26 = Colors.black26;
+const blackClr45 = Colors.black45;
 const whiteColor = Colors.white;
 const whiteClr30 = Colors.white30;
 const greyColor = Colors.grey;
@@ -17,6 +17,10 @@ const whiteTxt20 = TextStyle(color: Colors.white, fontSize: 20);
 const whiteTxt22 = TextStyle(color: Colors.white, fontSize: 22);
 const white24Txt14 = TextStyle(color: Colors.white24);
 final cyanTxt60 = TextStyle(color: Colors.cyan[100], fontSize: 60);
+const splashTxtStyle = TextStyle(
+  color: whiteColor,
+  fontSize: 40,
+);
 
 // Height and Width
 const sbHeight10 = SizedBox(height: 10);

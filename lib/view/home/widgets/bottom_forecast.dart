@@ -41,7 +41,7 @@ class BottomForecastScroll extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10), color: blackClr26),
+                    borderRadius: BorderRadius.circular(10), color: blackClr45),
                 child: Column(
                   children: [
                     Text(time, style: whiteTxt14),

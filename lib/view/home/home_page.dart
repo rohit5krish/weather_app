@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:weather_app/controller/weather_controller.dart';
@@ -10,7 +11,8 @@ import 'package:weather_app/view/home/widgets/wind_humidity.dart';
 import 'package:weather_app/view/search/search.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  final Position? usrLocation;
+  HomePage({Key? key, this.usrLocation}) : super(key: key);
 
   var climate = 'morning'.obs;
 
@@ -19,7 +21,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      weatherCtrl.getWeatherData();
+    });
     return Obx(() {
       var weatherTime;
       if (!weatherCtrl.isLoading.value) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/view/home/home_page.dart';
+import 'package:weather_app/view/splash/splash.dart';
 
 void main() {
   runApp(WeatherApp());
@@ -14,7 +15,7 @@ class WeatherApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.cyan),
-      home: HomePage(),
+      home: SplashScreen(),
     );
   }
 }
