@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/view/core/colors.dart';
 import 'package:weather_app/view/home/widgets/bottom_forecast.dart';
@@ -12,7 +13,8 @@ import 'package:weather_app/view/search/search.dart';
 
 class HomePage extends StatelessWidget {
   final Position? usrLocation;
-  HomePage({Key? key, this.usrLocation}) : super(key: key);
+  final String? place;
+  HomePage({Key? key, this.usrLocation, this.place}) : super(key: key);
 
   var climate = 'morning'.obs;
 
@@ -21,9 +23,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      weatherCtrl.getWeatherData(userLocation: usrLocation);
-    });
+    if (usrLocation != null) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) async {
+        await weatherCtrl.getWeatherData(userLocation: usrLocation);
+      });
+    } else {
+      WidgetsBinding.instance!.addPostFrameCallback((_) async {
+        await weatherCtrl.getWeatherData(savedPlace: place);
+      });
+    }
     return Obx(() {
       var weatherTime;
       if (!weatherCtrl.isLoading.value) {
@@ -59,8 +67,8 @@ class HomePage extends StatelessWidget {
             elevation: 0,
             title: (weatherCtrl.isLoading.value)
                 ? Shimmer.fromColors(
-                    highlightColor: greyClr100!,
-                    baseColor: greyClr300!,
+                    highlightColor: blueClr100!,
+                    baseColor: blueClr300!,
                     child: Container(
                       width: 60,
                       height: 30,
@@ -91,7 +99,9 @@ class HomePage extends StatelessWidget {
           ),
           body: RefreshIndicator(
             onRefresh: () {
-              return weatherCtrl.getWeatherData();
+              return usrLocation != null
+                  ? weatherCtrl.getWeatherData(userLocation: usrLocation)
+                  : weatherCtrl.getWeatherData(savedPlace: place);
             },
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -135,17 +145,10 @@ class HomePage extends StatelessWidget {
                                           weatherDetail.wind!.speed.toString(),
                                     ),
                                     sbHeight30,
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Today', style: whiteTxt18),
-                                        Text(
-                                          '7-Day Forecasts',
-                                          style: whiteTxt14,
-                                        )
-                                      ],
-                                    ),
+                                    Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text('Forecast',
+                                            style: whiteTxt18)),
                                     sbHeight20,
                                     BottomForecastScroll(
                                       forecastList:

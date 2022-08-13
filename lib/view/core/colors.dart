@@ -7,8 +7,10 @@ const whiteColor = Colors.white;
 const whiteClr24 = Colors.white24;
 const greyColor = Colors.grey;
 const blueColor = Colors.blue;
-final greyClr300 = Colors.blue[300];
-final greyClr100 = Colors.blue[100];
+final blueClr300 = Colors.blue[300];
+final blueClr100 = Colors.blue[100];
+final greyClr300 = Colors.grey[800];
+final greyClr600 = Colors.grey[600];
 
 // TextStyles
 const whiteTxt14 = TextStyle(color: Colors.white);

@@ -19,9 +19,8 @@ class LocationController extends GetxController {
       }
     }
     Position position = await Geolocator.getCurrentPosition();
-    print(position);
     isLocationLoading(false);
-    Get.off(HomePage(
+    Get.offAll(HomePage(
       usrLocation: position,
     ));
   }
