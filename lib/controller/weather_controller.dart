@@ -20,13 +20,12 @@ class WeatherController extends GetxController {
       {Position? userLocation, String? savedPlace}) async {
     isLoading(true);
     isError(false);
-
-    // if (userLocation != null) {
-    final weatherResult =
-        await ApiService().getWeather(usrLocation: userLocation);
-    // }else{
-
-    // }
+    final weatherResult;
+    if (userLocation != null) {
+      weatherResult = await ApiService().getWeather(usrLocation: userLocation);
+    } else {
+      weatherResult = await ApiService().getWeather(place: savedPlace);
+    }
     log('$weatherResult');
     weatherResult.fold((failure) {
       isLoading(false);

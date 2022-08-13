@@ -9,8 +9,17 @@ class ApiService {
   Future<Either<MainFailure, WeatherModel>> getWeather(
       {String? place, Position? usrLocation}) async {
     try {
-      final Response response = await Dio().get(ApiEndpoints.weatherUrl,
-          queryParameters: {'q': place ?? usrLocation ?? 'palakkad'});
+      final Response response;
+      if (place != null) {
+        response = await Dio()
+            .get(ApiEndpoints.weatherUrl, queryParameters: {'q': place});
+      } else {
+        response = await Dio().get(ApiEndpoints.weatherLatLongUrl,
+            queryParameters: {
+              'lat': usrLocation!.latitude,
+              'lon': usrLocation.longitude
+            });
+      }
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result = WeatherModel.fromJson(response.data);

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const blackColor = Colors.black;
 const blackClr45 = Colors.black45;
 const whiteColor = Colors.white;
-const whiteClr30 = Colors.white30;
+const whiteClr24 = Colors.white24;
 const greyColor = Colors.grey;
 const blueColor = Colors.blue;
 final greyClr300 = Colors.blue[300];
@@ -15,7 +15,7 @@ const whiteTxt14 = TextStyle(color: Colors.white);
 const whiteTxt18 = TextStyle(color: Colors.white, fontSize: 18);
 const whiteTxt20 = TextStyle(color: Colors.white, fontSize: 20);
 const whiteTxt22 = TextStyle(color: Colors.white, fontSize: 22);
-const white24Txt14 = TextStyle(color: Colors.white24);
+const white38Txt14 = TextStyle(color: Colors.white38);
 final cyanTxt60 = TextStyle(color: Colors.cyan[100], fontSize: 60);
 const splashTxtStyle = TextStyle(
   color: whiteColor,

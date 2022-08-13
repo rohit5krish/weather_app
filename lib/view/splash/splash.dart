@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/view/core/colors.dart';
 import 'package:weather_app/view/home/home_page.dart';
 import 'package:weather_app/view/search/search.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
+  SplashScreen({Key? key}) : super(key: key);
+  final LocationController _locCtrl = Get.put(LocationController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,8 +24,7 @@ class SplashScreen extends StatelessWidget {
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SafeArea(
-            child: Padding(
+        body: Padding(
           padding: EdgeInsets.all(20),
           child: Center(
               child: Column(
@@ -32,37 +32,26 @@ class SplashScreen extends StatelessWidget {
             children: [
               Text('Weather App', style: splashTxtStyle),
               sbHeight20,
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: whiteColor),
-                  onPressed: () async {
-                    LocationPermission permissionCheck =
-                        await Geolocator.checkPermission();
-
-                    // Not permitted at start
-                    if (permissionCheck == LocationPermission.denied) {
-                      LocationPermission reqResult =
-                          await Geolocator.requestPermission();
-                      if (reqResult == LocationPermission.denied) {
-                        exit(0);
-                        return;
-                      }
-                    }
-
-                    Position position = await Geolocator.getCurrentPosition(
-                        desiredAccuracy: LocationAccuracy.high);
-                    Get.to(HomePage(
-                      usrLocation: position,
-                    ));
-                  },
-                  child: Text('Detect Location')),
+              Obx(() {
+                return ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: whiteColor),
+                    onPressed: () async {
+                      await _locCtrl.getLocationData();
+                    },
+                    child: _locCtrl.isLocationLoading.value
+                        ? CircularProgressIndicator(
+                            strokeWidth: 2,
+                          )
+                        : Text('Detect Location'));
+              }),
               ElevatedButton(
                   onPressed: () {
-                    Get.off(SearchPage());
+                    Get.to(SearchPage());
                   },
                   child: Text('Select Manually'))
             ],
           )),
-        )),
+        ),
       ),
     );
   }

@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      weatherCtrl.getWeatherData();
+      weatherCtrl.getWeatherData(userLocation: usrLocation);
     });
     return Obx(() {
       var weatherTime;
@@ -46,14 +46,11 @@ class HomePage extends StatelessWidget {
                     fit: BoxFit.cover)
                 : null,
             gradient: LinearGradient(colors: [
-              // Color.fromARGB(255, 160, 212, 255),
               Color.fromARGB(255, 123, 188, 241),
               Color.fromARGB(255, 108, 124, 214),
               Color.fromARGB(255, 103, 79, 225),
               Color.fromARGB(255, 98, 72, 232),
               Color.fromARGB(255, 83, 55, 218),
-              // Color.fromARGB(255, 44, 18, 171),
-              // Color.fromARGB(255, 29, 7, 139),
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: Scaffold(
           backgroundColor: Colors.transparent,
