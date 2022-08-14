@@ -5,22 +5,32 @@ import 'package:weather_app/view/forecast/widgets/forecast_inherited_widget.dart
 
 class ForecastWidget extends StatelessWidget {
   final String? weatherDate;
+  final List<ListDatas>? dailyForecastList;
   final int index;
 
   const ForecastWidget({
     Key? key,
     required this.index,
     this.weatherDate,
+    this.dailyForecastList,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<ListDatas> forecastList =
-        ForecastInheritedWidget.of(context)!.forecastList;
-    String weatherTime = forecastList[index].dtTxt!.substring(
-        forecastList[0].dtTxt!.indexOf(' ') + 1, forecastList[0].dtTxt!.length);
+    ListDatas forecastList;
+    if (dailyForecastList != null) {
+      forecastList = dailyForecastList![index];
+    } else {
+      forecastList = ForecastInheritedWidget.of(context)!.forecastList[index];
+    }
 
+    // Get the time of weather
+    String weatherTime = forecastList.dtTxt!.substring(
+        forecastList.dtTxt!.indexOf(' ') + 1, forecastList.dtTxt!.length);
     final time = weatherTime.substring(0, 5);
+
+// Get the Daily Forecast List
+
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Container(
@@ -51,8 +61,7 @@ class ForecastWidget extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text('${forecastList[index].main!.humidity}',
-                        style: whiteTxt20),
+                    Text('${forecastList.main!.humidity}', style: whiteTxt20),
                     Text(
                       'Humidity',
                       style: whiteTxt18,
@@ -62,11 +71,10 @@ class ForecastWidget extends StatelessWidget {
                 sbHeight10,
                 Column(
                   children: [
-                    Text('${forecastList[index].main!.temp}°C',
-                        style: whiteTxt20),
+                    Text('${forecastList.main!.temp}°C', style: whiteTxt20),
                     sbHeight10,
                     Text(
-                      forecastList[index].weather![0].main.toString(),
+                      forecastList.weather![0].main.toString(),
                       style: whiteTxt22,
                     ),
                   ],
@@ -75,7 +83,7 @@ class ForecastWidget extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      '${forecastList[index].wind!.speed} m/s',
+                      '${forecastList.wind!.speed} m/s',
                       style: whiteTxt20,
                     ),
                     Text(

@@ -16,6 +16,26 @@ class ForecastPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<ListDatas> forecastList =
         ForecastInheritedWidget.of(context)!.forecastList;
+    List<ListDatas> dailyForecastList = [];
+
+    int index = 0;
+    String _checkDate = forecastList[index]
+        .dtTxt!
+        .substring(0, forecastList[0].dtTxt!.indexOf(' ') + 1);
+    while (index < forecastList.length) {
+      if (forecastList[index]
+                  .dtTxt!
+                  .substring(0, forecastList[0].dtTxt!.indexOf(' ') + 1) !=
+              _checkDate ||
+          index == 0) {
+        dailyForecastList.add(forecastList[index]);
+        print(_checkDate);
+      }
+      _checkDate = forecastList[index]
+          .dtTxt!
+          .substring(0, forecastList[0].dtTxt!.indexOf(' ') + 1);
+      index = index + 1;
+    }
     return Scaffold(
       backgroundColor: blackColor,
       appBar: AppBar(
@@ -37,18 +57,16 @@ class ForecastPage extends StatelessWidget {
       ),
       body: ListView.builder(
           physics: const BouncingScrollPhysics(),
-          itemCount: 6,
+          itemCount: dailyForecastList.length,
           itemBuilder: (context, index) {
-            String weatherTime = forecastList[index].dtTxt!.substring(
-                forecastList[0].dtTxt!.indexOf(' ') + 1,
-                forecastList[0].dtTxt!.length);
-            String weatherDate = forecastList[index]
+            String weatherDate = dailyForecastList[index]
                 .dtTxt!
-                .substring(0, forecastList[0].dtTxt!.indexOf(' ') + 1);
-
-            final time = weatherTime.substring(0, 5);
-
-            return ForecastWidget(index: index, weatherDate: weatherDate);
+                .substring(0, dailyForecastList[0].dtTxt!.indexOf(' ') + 1);
+            return ForecastWidget(
+              index: index,
+              weatherDate: weatherDate,
+              dailyForecastList: dailyForecastList,
+            );
           }),
     );
   }
