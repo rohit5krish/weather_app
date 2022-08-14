@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/forecast/widgets/forecast_widget.dart';
 
 class ForecastDetails extends StatelessWidget {
@@ -16,11 +16,11 @@ class ForecastDetails extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: whiteColor,
             )),
-        title: Text(
+        title: const Text(
           'Forecast Details',
           style: whiteTxt20,
         ),

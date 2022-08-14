@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/model/core/api_endpoints.dart';
 import 'package:weather_app/model/weather_model/weather_model.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/forecast/widgets/forecast_inherited_widget.dart';
 import 'package:weather_app/view/forecast/widgets/forecast_widget.dart';
 
@@ -29,7 +28,6 @@ class ForecastPage extends StatelessWidget {
               _checkDate ||
           index == 0) {
         dailyForecastList.add(forecastList[index]);
-        print(_checkDate);
       }
       _checkDate = forecastList[index]
           .dtTxt!
@@ -43,11 +41,11 @@ class ForecastPage extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: whiteColor,
             )),
-        title: Text(
+        title: const Text(
           'Current Forecastings',
           style: whiteTxt18,
         ),

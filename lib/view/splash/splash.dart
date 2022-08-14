@@ -1,24 +1,21 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/home/home_page.dart';
 import 'package:weather_app/view/search/search.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
 
-  final LocationController _locControl = Get.put(LocationController());
   final WeatherController weatherControl = Get.put(WeatherController());
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
         Color.fromARGB(255, 123, 188, 241),
         Color.fromARGB(255, 108, 124, 214),
@@ -29,12 +26,12 @@ class SplashScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Weather App', style: splashTxtStyle),
+              const Text('Weather App', style: splashTxtStyle),
               sbHeight20,
               GetBuilder<LocationController>(
                   init: LocationController(),
@@ -49,16 +46,16 @@ class SplashScreen extends StatelessWidget {
                           await Get.offAll(() => HomePage());
                         },
                         child: _locCtrl.isLocationLoading
-                            ? CircularProgressIndicator(
+                            ? const CircularProgressIndicator(
                                 strokeWidth: 2,
                               )
-                            : Text('Detect Location'));
+                            : const Text('Detect Location'));
                   }),
               ElevatedButton(
                   onPressed: () {
                     Get.to(() => SearchPage());
                   },
-                  child: Text('Select Manually'))
+                  child: const Text('Select Manually'))
             ],
           )),
         ),

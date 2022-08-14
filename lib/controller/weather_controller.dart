@@ -8,12 +8,6 @@ class WeatherController extends GetxController {
   var isError = false;
   var weatherData = WeatherModel();
 
-  // @override
-  // void onInit() {
-  //   getWeatherData();
-  //   super.onInit();
-  // }
-
   Future<void> getWeatherData(
       {Position? userLocation, String? savedPlace}) async {
     isLoading = true;

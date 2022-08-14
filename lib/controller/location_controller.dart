@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/view/home/home_page.dart';
 
 class LocationController extends GetxController {
   var isLocationLoading = false;
@@ -21,9 +20,6 @@ class LocationController extends GetxController {
     }
     Position position = await Geolocator.getCurrentPosition();
     isLocationLoading = false;
-    // Get.offAll(() => HomePage(
-    //       usrLocation: position,
-    //     ));
     update();
     return position;
   }

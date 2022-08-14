@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/model/core/api_endpoints.dart';
 import 'package:weather_app/model/weather_model/weather_model.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/forecast/forecast_details.dart';
-import 'package:weather_app/view/forecast/forecast_page.dart';
 import 'package:weather_app/view/forecast/widgets/forecast_inherited_widget.dart';
 
 class BottomForecastScroll extends StatelessWidget {
@@ -29,7 +28,7 @@ class BottomForecastScroll extends StatelessWidget {
       count++;
     }
 
-    return Container(
+    return SizedBox(
       height: 120,
       child: ListView.builder(
           physics: const BouncingScrollPhysics(),
@@ -51,7 +50,7 @@ class BottomForecastScroll extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Container(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: blackClr45),

@@ -14,7 +14,7 @@ class HomeTopIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: screenSize.width * 0.65,
       height: screenSize.height * 0.25,
       child: Image.asset((climateDescription == 'moderate rain')

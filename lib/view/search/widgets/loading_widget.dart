@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 
 class SearchLoadingEffect extends StatelessWidget {
   const SearchLoadingEffect({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class SearchLoadingEffect extends StatelessWidget {
       child: Container(
         width: screenSize.width * 9,
         height: 80,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             color: greyClr300, borderRadius: BorderRadius.circular(20)),
       ),

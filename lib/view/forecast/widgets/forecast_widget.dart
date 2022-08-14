@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_model/weather_model.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/forecast/widgets/forecast_inherited_widget.dart';
 
 class ForecastWidget extends StatelessWidget {
@@ -34,10 +34,10 @@ class ForecastWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(colors: [
+            gradient: const LinearGradient(colors: [
               Color.fromARGB(255, 98, 72, 232),
               Color.fromARGB(255, 83, 55, 218),
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
@@ -52,7 +52,7 @@ class ForecastWidget extends StatelessWidget {
                     time,
                     style: whiteTxt18,
                   ),
-            Divider(
+            const Divider(
               color: blackClr45,
             ),
             sbHeight20,
@@ -62,7 +62,7 @@ class ForecastWidget extends StatelessWidget {
                 Column(
                   children: [
                     Text('${forecastList.main!.humidity}', style: whiteTxt20),
-                    Text(
+                    const Text(
                       'Humidity',
                       style: whiteTxt18,
                     )
@@ -86,7 +86,7 @@ class ForecastWidget extends StatelessWidget {
                       '${forecastList.wind!.speed} m/s',
                       style: whiteTxt20,
                     ),
-                    Text(
+                    const Text(
                       'Wind',
                       style: whiteTxt18,
                     )

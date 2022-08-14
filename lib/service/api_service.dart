@@ -25,10 +25,10 @@ class ApiService {
         final result = WeatherModel.fromJson(response.data);
         return Right(result);
       } else {
-        return Left(MainFailure.serverFailure());
+        return const Left(MainFailure.serverFailure());
       }
     } catch (e) {
-      return Left(MainFailure.clientFailure());
+      return const Left(MainFailure.clientFailure());
     }
   }
 }

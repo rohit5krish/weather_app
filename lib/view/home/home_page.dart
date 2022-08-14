@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/model/weather_model/weather_model.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/forecast/forecast_page.dart';
 import 'package:weather_app/view/forecast/widgets/forecast_inherited_widget.dart';
 import 'package:weather_app/view/home/widgets/bottom_forecast.dart';
@@ -58,7 +56,7 @@ class HomePage extends StatelessWidget {
                                 : 'assets/alwinNight.jpeg'),
                         fit: BoxFit.cover)
                     : null,
-                gradient: LinearGradient(colors: [
+                gradient: const LinearGradient(colors: [
                   Color.fromARGB(255, 123, 188, 241),
                   Color.fromARGB(255, 108, 124, 214),
                   Color.fromARGB(255, 103, 79, 225),
@@ -83,7 +81,7 @@ class HomePage extends StatelessWidget {
                         ),
                       )
                     : (weatherCtrl.isError)
-                        ? Text('')
+                        ? const Text('')
                         : Text(
                             weatherCtrl.weatherData.city!.name.toString(),
                             style: whiteTxt22,
@@ -94,7 +92,7 @@ class HomePage extends StatelessWidget {
                       onPressed: () {
                         Get.to(SearchPage());
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.search,
                         color: whiteColor,
                         size: 30,
@@ -114,9 +112,9 @@ class HomePage extends StatelessWidget {
                     children: [
                       Center(
                         child: (weatherCtrl.isLoading)
-                            ? LoadingEffect()
+                            ? const LoadingEffect()
                             : (weatherCtrl.isError)
-                                ? Text('')
+                                ? const Text('')
                                 : Builder(builder: (context) {
                                     final weatherDetail =
                                         weatherCtrl.weatherData.list![0];
@@ -158,7 +156,8 @@ class HomePage extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Today', style: whiteTxt18),
+                                            const Text('Today',
+                                                style: whiteTxt18),
                                             InkWell(
                                               onTap: () {
                                                 Get.to(() =>
@@ -167,9 +166,10 @@ class HomePage extends StatelessWidget {
                                                             weatherCtrl
                                                                 .weatherData
                                                                 .list!,
-                                                        child: ForecastPage()));
+                                                        child:
+                                                            const ForecastPage()));
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 '5-days Forecast >',
                                                 style: whiteTxt14,
                                               ),
@@ -180,7 +180,7 @@ class HomePage extends StatelessWidget {
                                         ForecastInheritedWidget(
                                             forecastList:
                                                 weatherCtrl.weatherData.list!,
-                                            child: BottomForecastScroll())
+                                            child: const BottomForecastScroll())
                                       ],
                                     );
                                   }),

@@ -3,7 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/home/home_page.dart';
 
 class SearchSuggestions extends StatelessWidget {
@@ -29,20 +29,20 @@ class SearchSuggestions extends StatelessWidget {
               init: LocationController(),
               builder: (_locCtrl) {
                 return Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: whiteClr24,
                       borderRadius: BorderRadius.circular(20)),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.place,
                         color: whiteColor,
                         size: 20,
                       ),
                       _locCtrl.isLocationLoading
-                          ? CircularProgressIndicator()
-                          : Text(
+                          ? const CircularProgressIndicator()
+                          : const Text(
                               'My Location',
                               style: whiteTxt14,
                             )
@@ -59,11 +59,11 @@ class SearchSuggestions extends StatelessWidget {
             await Get.offAll(HomePage());
           },
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: whiteClr24, borderRadius: BorderRadius.circular(18)),
             child: Row(
-              children: [
+              children: const [
                 Icon(
                   Icons.place,
                   color: whiteColor,

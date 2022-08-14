@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/home/home_page.dart';
 import 'package:weather_app/view/search/widgets/loading_widget.dart';
 import 'package:weather_app/view/search/widgets/suggestions_widget.dart';
@@ -23,12 +22,12 @@ class SearchPage extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: whiteColor,
               size: 30,
             )),
-        title: Text('Search for Places', style: whiteTxt22),
+        title: const Text('Search for Places', style: whiteTxt22),
         centerTitle: true,
         backgroundColor: blackColor,
         elevation: 0,
@@ -44,7 +43,7 @@ class SearchPage extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: screenSize.width,
                 height: 60,
                 child: TextFormField(
@@ -55,8 +54,8 @@ class SearchPage extends StatelessWidget {
                   },
                   style: whiteTxt14,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search, color: whiteClr24),
-                    contentPadding: EdgeInsets.only(left: 20),
+                    prefixIcon: const Icon(Icons.search, color: whiteClr24),
+                    contentPadding: const EdgeInsets.only(left: 20),
                     hintText: 'Search for City',
                     hintStyle: white38Txt14,
                     border: OutlineInputBorder(
@@ -71,9 +70,10 @@ class SearchPage extends StatelessWidget {
                   init: WeatherController(),
                   builder: (controller) {
                     if (controller.isLoading) {
-                      return SearchLoadingEffect();
+                      return const SearchLoadingEffect();
                     } else if (controller.isError) {
-                      return Text('Unable to find Place.', style: whiteTxt20);
+                      return const Text('Unable to find Place.',
+                          style: whiteTxt20);
                     } else if (_searchCtrl.text.isEmpty) {
                       return SearchSuggestions();
                     } else if (controller.weatherData.city != null) {
@@ -88,7 +88,7 @@ class SearchPage extends StatelessWidget {
                         child: Container(
                           width: screenSize.width * 9,
                           height: 80,
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: whiteClr24,
                               borderRadius: BorderRadius.circular(20)),
@@ -108,7 +108,7 @@ class SearchPage extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return Text('');
+                      return const Text('');
                     }
                   }),
             ],

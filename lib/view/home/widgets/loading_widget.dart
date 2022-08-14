@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 
 class LoadingEffect extends StatelessWidget {
   const LoadingEffect({
@@ -24,7 +24,6 @@ class LoadingEffect extends StatelessWidget {
                 color: blueClr300, borderRadius: BorderRadius.circular(20)),
           ),
           sbHeight10,
-
           Container(
             width: 60,
             height: 60,
@@ -38,13 +37,6 @@ class LoadingEffect extends StatelessWidget {
             decoration: BoxDecoration(
                 color: blueClr300, borderRadius: BorderRadius.circular(5)),
           ),
-          // Divider(
-          //   indent: 40,
-          //   endIndent: 40,
-          //   color: whiteClr30,
-          //   thickness: 0.5,
-          //   height: 30,
-          // ),
           sbHeight20,
           Container(
             width: screenSize.width,
@@ -53,9 +45,9 @@ class LoadingEffect extends StatelessWidget {
                 color: blueClr300, borderRadius: BorderRadius.circular(15)),
           ),
           sbHeight20,
-          Align(alignment: Alignment.centerLeft, child: Text('')),
+          const Align(alignment: Alignment.centerLeft, child: Text('')),
           sbHeight20,
-          Container(
+          SizedBox(
             height: 130,
             child: ListView.builder(
                 // physics: const NeverScrollableScrollPhysics(),
@@ -65,7 +57,7 @@ class LoadingEffect extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: blueClr300),

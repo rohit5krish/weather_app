@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/core/constants.dart';
 
 class WindAndHumidityContainer extends StatelessWidget {
   final String windSpeed;
@@ -15,7 +15,7 @@ class WindAndHumidityContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: screenSize.width * 0.8,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: blackClr45,
         borderRadius: BorderRadius.circular(20),
@@ -25,7 +25,7 @@ class WindAndHumidityContainer extends StatelessWidget {
         children: [
           Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.air,
                 color: whiteColor,
                 size: 28,
@@ -35,7 +35,7 @@ class WindAndHumidityContainer extends StatelessWidget {
                 '$windSpeed m/s',
                 style: whiteTxt14,
               ),
-              Text(
+              const Text(
                 'Wind',
                 style: whiteTxt14,
               ),
@@ -43,7 +43,7 @@ class WindAndHumidityContainer extends StatelessWidget {
           ),
           Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.water_drop_outlined,
                 color: whiteColor,
                 size: 28,
@@ -53,7 +53,7 @@ class WindAndHumidityContainer extends StatelessWidget {
                 '$humidity%',
                 style: whiteTxt14,
               ),
-              Text(
+              const Text(
                 'Humidity',
                 style: whiteTxt14,
               ),
