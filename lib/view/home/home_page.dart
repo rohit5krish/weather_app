@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
+import 'package:weather_app/model/weather_model/weather_model.dart';
 import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/forecast/forecast_page.dart';
+import 'package:weather_app/view/forecast/widgets/forecast_inherited_widget.dart';
 import 'package:weather_app/view/home/widgets/bottom_forecast.dart';
 import 'package:weather_app/view/home/widgets/home_top_illustration.dart';
 import 'package:weather_app/view/home/widgets/loading_widget.dart';
@@ -100,10 +103,10 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               body: RefreshIndicator(
-                onRefresh: () {
-                  return usrLocation != null
-                      ? weatherCtrl.getWeatherData(userLocation: usrLocation)
-                      : weatherCtrl.getWeatherData(savedPlace: place);
+                onRefresh: () async {
+                  return await weatherCtrl.getWeatherData(
+                      savedPlace:
+                          weatherCtrl.weatherData.city!.name.toString());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -151,15 +154,33 @@ class HomePage extends StatelessWidget {
                                               .toString(),
                                         ),
                                         sbHeight30,
-                                        Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text('Forecast',
-                                                style: whiteTxt18)),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('Today', style: whiteTxt18),
+                                            InkWell(
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    ForecastInheritedWidget(
+                                                        forecastList:
+                                                            weatherCtrl
+                                                                .weatherData
+                                                                .list!,
+                                                        child: ForecastPage()));
+                                              },
+                                              child: Text(
+                                                '5-days Forecast >',
+                                                style: whiteTxt14,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                         sbHeight20,
-                                        BottomForecastScroll(
-                                          forecastList:
-                                              weatherCtrl.weatherData.list!,
-                                        )
+                                        ForecastInheritedWidget(
+                                            forecastList:
+                                                weatherCtrl.weatherData.list!,
+                                            child: BottomForecastScroll())
                                       ],
                                     );
                                   }),

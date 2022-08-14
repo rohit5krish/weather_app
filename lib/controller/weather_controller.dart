@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/model/weather_model/weather_model.dart';
@@ -18,8 +16,9 @@ class WeatherController extends GetxController {
 
   Future<void> getWeatherData(
       {Position? userLocation, String? savedPlace}) async {
-    isLoading=true;
-    isError=false;
+    isLoading = true;
+    isError = false;
+    update();
     var weatherResult;
     if (userLocation != null) {
       weatherResult = await ApiService().getWeather(usrLocation: userLocation);
@@ -27,12 +26,12 @@ class WeatherController extends GetxController {
       weatherResult = await ApiService().getWeather(place: savedPlace);
     }
     weatherResult.fold((failure) {
-      isLoading=false;
-      isError=true;
+      isLoading = false;
+      isError = true;
     }, (success) {
-      isLoading=false;
-      isError=false;
-      weatherData=success;
+      isLoading = false;
+      isError = false;
+      weatherData = success;
     });
     update();
   }

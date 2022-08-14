@@ -3,17 +3,21 @@ import 'package:get/get.dart';
 import 'package:weather_app/model/core/api_endpoints.dart';
 import 'package:weather_app/model/weather_model/weather_model.dart';
 import 'package:weather_app/view/core/colors.dart';
+import 'package:weather_app/view/forecast/forecast_details.dart';
 import 'package:weather_app/view/forecast/forecast_page.dart';
+import 'package:weather_app/view/forecast/widgets/forecast_inherited_widget.dart';
 
 class BottomForecastScroll extends StatelessWidget {
-  final List<ListDatas> forecastList;
+  // final List<ListDatas> forecastList;
   const BottomForecastScroll({
     Key? key,
-    required this.forecastList,
+    // required this.forecastList,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<ListDatas> forecastList =
+        ForecastInheritedWidget.of(context)!.forecastList;
     int count = 0;
     while (forecastList[0]
                 .dtTxt!
@@ -40,7 +44,9 @@ class BottomForecastScroll extends StatelessWidget {
 
             return InkWell(
               onTap: () {
-                Get.to(ForecastPage(forecastList: forecastList));
+                Get.to(ForecastInheritedWidget(
+                    forecastList: forecastList,
+                    child: ForecastDetails(index: index)));
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
