@@ -41,7 +41,6 @@ dependencies:
   json_serializable: ^6.2.0
   json_annotation: ^4.5.0
   shimmer: ^2.0.0
-  shared_preferences: ^0.5.5
   geolocator: ^9.0.1
 
 dev_dependencies:
